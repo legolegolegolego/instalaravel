@@ -6,5 +6,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    //
+    public function showLogin() {
+
+        return view('login');
+    }
+    public function showRegister() {
+
+        return view('register');
+    }
 }
