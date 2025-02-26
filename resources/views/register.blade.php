@@ -20,10 +20,10 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <div>
+        <!-- <div>
             <label for="banned">Banned:</label>
             <input type="checkbox" id="banned" name="banned" value="0">
-        </div>
+        </div> -->
         <button type="submit">Register</button>
     </form>
 </body>

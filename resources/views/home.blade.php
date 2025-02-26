@@ -9,5 +9,7 @@
     <h1>Home</h1>
     <a href="{{ route('login') }}">Login</a>
     <a href="{{ route('register') }}">Register</a>
+    <a href="{{ route('logout') }}">Logout</a>
+    <a href="{{ route('deleteAccount') }}">Delete Account</a>
 </body>
 </html>

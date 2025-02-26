@@ -16,6 +16,25 @@ class UserController extends Controller
         return view('register');
     }
 
+    public function deleteAccount() {
+        
+        // Obtiene el usuario actual autenticado
+        $user = Auth::user();
+
+        // Encuentra al usuario actual en la bd y lo borra
+        User::find($user['id'])->delete();
+        
+        Auth::logout(); // borra la session de la BD
+
+        // Redirige a la página de registro para crear una cuenta
+        return redirect()->route('register');
+    }
+
+    public function doLogout() {
+        Auth::logout(); // borra la session de la BD
+        return redirect()->route('login');
+    }
+
     public function doRegister(Request $request){
 
         // Obtiene los datos del formulario de registro
