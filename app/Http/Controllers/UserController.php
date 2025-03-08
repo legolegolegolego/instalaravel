@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -16,30 +17,64 @@ class UserController extends Controller
         return view('register');
     }
 
+    
     public function deleteAccount() {
         
         // Obtiene el usuario actual autenticado
         $user = Auth::user();
-
+        
         // Encuentra al usuario actual en la bd y lo borra
         User::find($user['id'])->delete();
         
         Auth::logout(); // borra la session de la BD
-
+        
         // Redirige a la página de registro para crear una cuenta
         return redirect()->route('register');
     }
-
+    
     public function doLogout() {
         Auth::logout(); // borra la session de la BD
         return redirect()->route('login');
     }
-
-    public function doRegister(Request $request){
+    
+    public function createPost(Request $request) {
 
         // Obtiene los datos del formulario de registro
         $data = $request->all();
 
+        // Valida los datos del formulario
+        $validator = Validator::make(
+            $data,
+            [
+            'title' => 'required|max:100',
+            'description' => 'required|max:1000',
+        ], messages:[
+            'title.required' => 'The title field is required',
+            'title.max' => 'The title field cannot exceed 100 characters',
+            'description.required' => 'The content field is required',
+            'description.max' => 'The description field cannot exceed 1000 characters',
+        ]);
+
+        // Si falla la validación, redirige al formulario de registro con los errores
+        if ($validator->fails()) {
+            return redirect()->route('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Si la validación es correcta, crea un nuevo post
+        $post = new Post();
+        $post->title = $data['title'];
+        $post->description = $data['description'];
+        $post->save();
+
+        return view('post-form');
+    }
+    public function doRegister(Request $request){
+        
+        // Obtiene los datos del formulario de registro
+        $data = $request->all();
+        
         // Valida los datos del formulario
         $validator = Validator::make(
             $data,
