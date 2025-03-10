@@ -10,6 +10,9 @@
     <div class="container">
         <div class="post-details">
             <h1>{{ $post->title }}</h1>
+            @if ($post->image_url)
+                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="post-image">
+            @endif
             <p>{{ $post->description }}</p>
             <p><strong>Published on:</strong> {{ $post->publish_date }}</p>
             <p><strong>Likes:</strong> {{ $post->n_likes }}</p>

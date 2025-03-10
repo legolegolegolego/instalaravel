@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('publish_date')->useCurrent();
             $table->integer('n_likes')->default(0);
             $table->foreignId('belongs_to')->constrained('users')->onDelete('cascade');
+            $table->string('image_url');
             $table->timestamps();
         });
     }

@@ -49,16 +49,20 @@ class PostController extends Controller
             [
             'title' => 'required|max:100',
             'description' => 'required|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], messages:[
             'title.required' => 'The title field is required',
             'title.max' => 'The title field cannot exceed 100 characters',
             'description.required' => 'The content field is required',
             'description.max' => 'The description field cannot exceed 1000 characters',
+            'image.image' => 'The file must be an image',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif',
+            'image.max' => 'The image may not be greater than 2048 kilobytes',
         ]);
 
         // Si falla la validación, redirige al formulario de registro con los errores
         if ($validator->fails()) {
-            return redirect()->route('register')
+            return redirect()->route('create-post')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -68,7 +72,15 @@ class PostController extends Controller
         $post->title = $data['title'];
         $post->description = $data['description'];
         $post->belongs_to = Auth::id();
-        // $post->publish_date = now();
+
+        // Manejar la subida de la imagen
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $post->image_url = $imageName;
+        }
+
         $post->save();
 
         // Redirige al usuario a la página de inicio (donde se ven todos los post) tras crear el post con éxito
