@@ -11,9 +11,28 @@
     @foreach ($posts as $post)
         <div class="post">
             <h2>{{ $post->title }}</h2>
-            <p>{{ $post->body }}</p>
+            <p>{{ $post->description }}</p>
             <small>Posted on {{ $post->created_at->format('d M Y') }} by {{ $post->user->name }}</small>
+            <p>Likes: {{ $post->n_likes }}</p>
+            <div class="comments">
+            <h3>Comments:</h3>
+            <!-- si no tiene comentarios el post muestra un array vacío -->
+            @foreach ($post->comments ?? [] as $comment)
+                <div class="comment">
+                <p>{{ $comment->comment }}</p>
+                <small>Commented by {{ $comment->user->name }} on {{ $comment->created_at->format('d M Y') }}</small>
+                </div>
+            @endforeach
+            </div>
+            <form action="{{ route('delete-post', $post->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete Post</button>
+            </form>
+            <!-- Redirección al form para comentar pasándole el id del post en cuestion -->
+            <a href="{{ route('comment-form', ['id' => $post->id]) }}">Comment on this post</a>
         </div>
     @endforeach
+    <a href="{{ route('create-post') }}">Create a post</a>
 </body>
 </html>

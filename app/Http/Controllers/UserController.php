@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -36,40 +35,7 @@ class UserController extends Controller
         Auth::logout(); // borra la session de la BD
         return redirect()->route('login');
     }
-    
-    public function createPost(Request $request) {
 
-        // Obtiene los datos del formulario de registro
-        $data = $request->all();
-
-        // Valida los datos del formulario
-        $validator = Validator::make(
-            $data,
-            [
-            'title' => 'required|max:100',
-            'description' => 'required|max:1000',
-        ], messages:[
-            'title.required' => 'The title field is required',
-            'title.max' => 'The title field cannot exceed 100 characters',
-            'description.required' => 'The content field is required',
-            'description.max' => 'The description field cannot exceed 1000 characters',
-        ]);
-
-        // Si falla la validación, redirige al formulario de registro con los errores
-        if ($validator->fails()) {
-            return redirect()->route('register')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        // Si la validación es correcta, crea un nuevo post
-        $post = new Post();
-        $post->title = $data['title'];
-        $post->description = $data['description'];
-        $post->save();
-
-        return view('post-form');
-    }
     public function doRegister(Request $request){
         
         // Obtiene los datos del formulario de registro
@@ -148,7 +114,7 @@ class UserController extends Controller
             // los 2 comentarios son para cuando necesite quedarme con el user, y hacer algo como enviar id
             // lo implementare cuando avance
             // $user = User::where('email', $email)->first();
-            return redirect()->route('home'); // ['id' => $user->id]
+            return redirect()->route('posts'); // ['id' => $user->id]
         } else {
             $validator->errors()->add('credentials', 'Invalid email or password');
             return redirect()->route('login')

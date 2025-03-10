@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->date('publish_date');
-            $table->integer('n_likes');
-            $table->foreignId('belongs_to')->constrained('users');
+            $table->timestamp('publish_date')->useCurrent();
+            $table->integer('n_likes')->default(0);
+            $table->foreignId('belongs_to')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

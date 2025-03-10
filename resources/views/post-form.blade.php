@@ -1,4 +1,4 @@
-<!-- Aquí irá un formulario donde el user mete los datos del post como titulo y demas
+<!-- Formulario donde el user mete los datos del post como titulo y demas
  y se registra en la bd mediante el envio del formulario -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +15,8 @@
             <input type="text" class="form-control" id="title" name="title" required>
         </div>
         <div class="form-group">
-            <label for="content">Content:</label>
-            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

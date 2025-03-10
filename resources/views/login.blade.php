@@ -6,7 +6,6 @@
     <title>Login</title>
 </head>
 <body>
-    <!-- TODO: Mostrar errores en el html, preguntar Diego -->
     <form action="{{ route('login') }}" method="POST">
         @csrf
         <div>
@@ -17,13 +16,22 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <!-- Muestra de error en login -->
-        @error('credentials')
-            <div>{{ $message }}</div>
-        @enderror
+        <!-- Muestra de errores en login -->
+        @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         <!--  -->
         <div>
             <button type="submit">Login</button>
+        </div>
+        <div>
+            <p>Don't you have an account? <a href="{{ route('register') }}">Register</a></p>       
         </div>
     </form>
 </body>
