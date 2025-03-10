@@ -14,7 +14,10 @@
                     <h2>{{ $post->title }}</h2>
                 </a>
                 <img src="{{ asset('images/' . $post->image_url) }}" alt="Post Image" class="post-thumbnail">
-                <p>{{ $post->description }}</p>
+                <div class="description">
+                    <h3>Description:</h3>
+                    <p>{{ $post->description }}</p>
+                </div>
                 <small>Posted on {{ $post->created_at->format('d M Y') }} by {{ $post->user->name }}</small>
                 <p>Likes: {{ $post->n_likes }}</p>
                 <form action="{{ route('like-post', $post->id) }}" method="POST">
@@ -40,6 +43,7 @@
         @endforeach
         <a href="{{ route('create-post') }}" class="btn create-post-btn">Create a post</a>
         <a href="{{ route('deleteAccount') }}" class="btn delete-btn">Delete Account</a>
+        <br>
         <a href="{{ route('logout') }}" class="nav-link">Logout</a>
     </div>
 </body>

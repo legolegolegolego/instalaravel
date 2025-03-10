@@ -13,10 +13,17 @@
             @if ($post->image_url)
                 <img src="{{ asset('images/' . $post->image_url) }}" alt="Post Image" class="post-image">
             @endif
-            <p>{{ $post->description }}</p>
-            <p><strong>Published on:</strong> {{ $post->publish_date }}</p>
+            <div class="description">
+                    <h3>Description:</h3>
+                    <p>{{ $post->description }}</p>
+            </div>
             <p><strong>Likes:</strong> {{ $post->n_likes }}</p>
+            <form action="{{ route('like-post', $post->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn like-btn">Like</button>
+            </form>
             <p><strong>Author:</strong> {{ $post->user->name }}</p>
+            <p><strong>Published on:</strong> {{ $post->publish_date }}</p>
 
             <h2>Comments</h2>
             <div class="comments">
@@ -27,6 +34,7 @@
                     </div>
                 @endforeach
             </div>
+
 
             <form action="{{ route('comment-form', ['id' => $post->id]) }}" method="GET">
                     @csrf
