@@ -13,7 +13,7 @@
                 <a href="{{ route('post', $post->id) }}" class="post-title">
                     <h2>{{ $post->title }}</h2>
                 </a>
-                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="post-thumbnail">
+                <img src="{{ asset('images/' . $post->image_url) }}" alt="Post Image" class="post-thumbnail">
                 <p>{{ $post->description }}</p>
                 <small>Posted on {{ $post->created_at->format('d M Y') }} by {{ $post->user->name }}</small>
                 <p>Likes: {{ $post->n_likes }}</p>

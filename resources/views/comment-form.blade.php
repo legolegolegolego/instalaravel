@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="{{ route('comment-form') }}" method="POST" class="comment-form">
+        <form action="{{ route('comment-post', $post->id) }}" method="POST" class="comment-form">
             @csrf
             <div class="form-group">
                 <label for="comment">Comment:</label>

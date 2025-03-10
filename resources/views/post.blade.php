@@ -11,7 +11,7 @@
         <div class="post-details">
             <h1>{{ $post->title }}</h1>
             @if ($post->image_url)
-                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="post-image">
+                <img src="{{ asset('images/' . $post->image_url) }}" alt="Post Image" class="post-image">
             @endif
             <p>{{ $post->description }}</p>
             <p><strong>Published on:</strong> {{ $post->publish_date }}</p>
@@ -27,6 +27,11 @@
                     </div>
                 @endforeach
             </div>
+
+            <form action="{{ route('comment-form', ['id' => $post->id]) }}" method="GET">
+                    @csrf
+                    <button type="submit" class="btn comment-btn">Comment on this post</button>
+                </form>
 
             @if (Auth::user()->id == $post->belongs_to)
                 <form action="{{ route('delete-post', $post->id) }}" method="POST" class="delete-form">
