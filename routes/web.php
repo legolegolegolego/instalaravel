@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     // POSTs
     Route::get('/create-post', [PostController::class, 'showFormPost'])->name('create-post');
     Route::post('/create-post', [PostController::class, 'createPost'])->name('create-post');
+    Route::post('/post/{id}/like', [PostController::class, 'likePost'])->name('like-post');
     Route::delete('/post/{id}', [PostController::class, 'deletePost'])->name('delete-post');
 
     // COMMENT

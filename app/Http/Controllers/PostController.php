@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
+
+    public function likePost($id) {
+        $post = Post::findOrFail($id);
+        $post->n_likes = $post->n_likes + 1;
+        $post->save();
+
+        return redirect()->route('posts')->with('success', 'Post liked successfully.');
+    }
     public function showPost($id) {
         
         $post = Post::with('user', 'comments.user')->findOrFail($id);
